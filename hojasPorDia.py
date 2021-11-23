@@ -7,10 +7,10 @@ app = '/home/soporteti/printerStatus/mundo/monitoreo/static/monitoreo/images'
 
 
 # CREAR VARIABLES PARA FECHA FORMATEADEA DE AYER Y HOY
-f = datetime.now() - timedelta(2) 
-date = f.strftime("%Y-%m-%d_1634")
+f = datetime.now()
+date = f.strftime("%Y-%m-%d_1630")
 just_date = f.strftime('%d_%b_%Y')
-fa = datetime.now() - timedelta(3)
+fa = datetime.now() - timedelta(1)
 yesterday = fa.strftime("%Y-%m-%d_1634")
 
 # CREACION DE LOS SET DE DATOS

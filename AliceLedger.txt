@@ -1,0 +1,3 @@
+Balance is 0
+Deposit 120
+Balance is 120

@@ -31,7 +31,7 @@ text_rect.centery = screen.get_rect().centery
 player_location = [40, 40]
 player_image = pygame.image.load('player.png')
 
-# Colitions
+# Coliders
 player_rect = pygame.Rect(player_location[0], player_location[1], player_image.get_width(), player_image.get_height())
 test_rect = pygame.Rect(100, 100, 100, 50)
 second_test_rect = pygame.Rect(120, 250, 50, 100)
@@ -62,7 +62,6 @@ while True:
     player_rect.y = player_location[1]
 
     # Check for collitions:
-    
 
     for event in pygame.event.get():
         if event.type == QUIT:

@@ -23,7 +23,7 @@ def collision_test(rect, tiles):
 
 
 def move(rect, movement, tiles):
-    '''Takes the collider(Rect okject) that want to move, the movement that you want to apply and the tiles list of your game.
+    '''Takes the collider(Rect object) that want to move, the movement that you want to apply and the tiles list of your game.
     Then returns the collider with the new coordinates to move and the type of collision that it makes with that movement.'''
     collision_type = {'right': False, 'left': False, 'top': False, 'bottom': False}
     rect.x += movement[0]

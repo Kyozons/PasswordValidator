@@ -25,6 +25,7 @@ def main():
     coin_image = pygame.image.load('data/images/coin.png').convert()
     coin_image.set_colorkey((255,255,255))
     
+    player_flip = False
     # Text
     bottom_font = pygame.font.SysFont('Corbel', 15)
     win_font = pygame.font.SysFont('Corbel', 35)
@@ -52,26 +53,37 @@ def main():
     # Scrolling
     true_scroll = [0,0]
     
+    # Background Objects
+    background_objects = [[0.25,[250,120,50,150]],[0.25,[100,150,120,150]],[0.5,[10,200,100,200]],[0.5,[50,90,150,50]]]
+    
+    
     coin_rects = []
-    empty_tiles = []
     y = 0
     for row in game_map:
         x = 0
         for tile in row:
             if tile == '3':
                 coin_rects.append(pygame.Rect(x * 16, y * 16, 5, 4))
-            if tile == '4':
-                empty_tiles.append(pygame.Rect(x*16,y*16,16,16))
             x += 1
         y += 1
     while True:  # Game Loop
         display.fill((146,244,255))
+        
     
         true_scroll[0] += (player_rect.x-true_scroll[0]-152)/20
         true_scroll[1] += (player_rect.y-true_scroll[1]-106)/20
         scroll = true_scroll.copy()
         scroll[0] = int(scroll[0])
         scroll[1] = int(scroll[1])
+        
+        pygame.draw.rect(display,(30,90,50),pygame.Rect(0,130,300,70))
+        for background_object in background_objects:
+            obj_rect = pygame.Rect(background_object[1][0]-scroll[0]*background_object[0],background_object[1][1]-scroll[1]*background_object[0],background_object[1][2],background_object[1][3])
+            if background_object[0] == 0.5:
+                pygame.draw.rect(display,(50,10,222),obj_rect)
+            else:
+                pygame.draw.rect(display,(30,40,90),obj_rect)
+    
     
     
         tile_rects = []
@@ -106,12 +118,16 @@ def main():
         win_text_rect.centery = display.get_rect().centery
         bottom_text_rect.centerx = win_text_rect.centerx
         bottom_text_rect.centery = win_text_rect.bottom
-        
-        if player_rect.colliderect(empty_tiles[0]) and coins_collected == coins_to_win:
+
+        if 763 >= player_rect.x >= 755 and 355 >= player_rect.y >= 352 and coins_collected == coins_to_win:
+            moving_left = False
+            moving_right = False
+            jumps_remaining = 0
+            vertical_momentum = 0
             display.blit(win_text, win_text_rect)
             display.blit(bottom_text, bottom_text_rect)
             
-        display.blit(player_image, (player_rect.x - scroll[0], player_rect.y - scroll[1]))
+        display.blit(pygame.transform.flip(player_image, player_flip, False), (player_rect.x-scroll[0], player_rect.y-scroll[1]))
         surface = pygame.transform.scale(display, SCREEN_SIZE)
         screen.blit(surface,(0,0))
         
@@ -126,10 +142,13 @@ def main():
             vertical_momentum = 3
         
         
-        
+        if player_movement[0] > 0:
+            player_flip = False
+        if player_movement[0] < 0:
+            player_flip = True
+
         
         player_rect, collisions = e.move(player_rect, player_movement, tile_rects)
-        display.blit(player_image, (player_rect.x, player_rect.y))
         
         
             
@@ -186,6 +205,9 @@ def main():
                     moving_right = False
                 if event.key == K_LEFT or event.key == K_a:
                     moving_left = False
+            if event.type == MOUSEBUTTONUP:
+                player_rect.x = 752
+                player_rect.y = 352
                     
                     
         pygame.display.update()

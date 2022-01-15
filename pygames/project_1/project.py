@@ -8,8 +8,14 @@ def main():
     
     # Constant
     SCREEN_SIZE = (600, 400)
+    # screen = pygame.display.set_mode((SCREEN_SIZE), 0, 32)
     
-    screen = pygame.display.set_mode((SCREEN_SIZE), 0, 32)
+    bits = 0
+    modes = pygame.display.list_modes(bits)
+    if not modes:
+        print(f'{bits}-bit not supported')
+    else:
+        screen = pygame.display.set_mode((SCREEN_SIZE), 0, bits)
     pygame.display.set_caption('Primo Project')
     
     display = pygame.Surface((300,200))
@@ -24,6 +30,12 @@ def main():
     grass_image = pygame.image.load('data/images/grass.png')
     coin_image = pygame.image.load('data/images/coin.png').convert()
     coin_image.set_colorkey((255,255,255))
+    layer1_image = pygame.image.load('data/images/background/layer1.png').convert()
+    layer1_image.set_colorkey((255,255,255))
+    layer2_image = pygame.image.load('data/images/background/layer2.png').convert()
+    layer2_image.set_colorkey((255,255,255))
+    layer3_image = pygame.image.load('data/images/background/layer3.png').convert()
+    layer3_image.set_colorkey((255,255,255))
     
     player_flip = False
     # Text
@@ -41,7 +53,7 @@ def main():
     coins_collected = 0
     # Colliders
     player_rect = pygame.Rect(30,323,player_image.get_width(), player_image.get_height())
-    
+    layer1_rect = pygame.Rect(0,0,layer1_image.get_width(), layer1_image.get_height())
     # Movement variables
     moving_right = False
     moving_left = False
@@ -69,21 +81,27 @@ def main():
     while True:  # Game Loop
         display.fill((146,244,255))
         
-    
+        jumps_remaining = 2
         true_scroll[0] += (player_rect.x-true_scroll[0]-152)/20
         true_scroll[1] += (player_rect.y-true_scroll[1]-106)/20
         scroll = true_scroll.copy()
         scroll[0] = int(scroll[0])
         scroll[1] = int(scroll[1])
         
-        pygame.draw.rect(display,(30,90,50),pygame.Rect(0,130,300,70))
+      
+        # pygame.draw.rect(display,(30,90,50),pygame.Rect(0-scroll[0]*0.25,130-scroll[1]*0.25,300,70))
         for background_object in background_objects:
             obj_rect = pygame.Rect(background_object[1][0]-scroll[0]*background_object[0],background_object[1][1]-scroll[1]*background_object[0],background_object[1][2],background_object[1][3])
             if background_object[0] == 0.5:
-                pygame.draw.rect(display,(50,10,222),obj_rect)
+                pass
+                # pygame.draw.rect(display,(50,10,222),obj_rect)
             else:
-                pygame.draw.rect(display,(30,40,90),obj_rect)
-    
+                pass
+                # pygame.draw.rect(display,(30,40,90),obj_rect)
+        
+        
+        
+        # print(player_rect) 
     
     
         tile_rects = []
@@ -130,7 +148,6 @@ def main():
         display.blit(pygame.transform.flip(player_image, player_flip, False), (player_rect.x-scroll[0], player_rect.y-scroll[1]))
         surface = pygame.transform.scale(display, SCREEN_SIZE)
         screen.blit(surface,(0,0))
-        
         player_movement = [0 ,0]
         if moving_right:
             player_movement[0] += 2

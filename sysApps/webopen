@@ -1,0 +1,25 @@
+#!/usr/bin/env python3 
+#! python3
+# webopen.py - Permite abrir un enlace escrito en la consola directamente a el navegador
+
+import webbrowser, sys
+
+if len (sys.argv) == 1:
+    # Abrir google si no se especifica nada
+    address = 'https://google.com'
+elif str(sys.argv[1]).startswith('http'):
+    # Si la dirección comienza con http se busca en el navegador
+    address = ''.join(sys.argv[1:])
+elif not str(sys.argv[1]).startswith('http') and str(sys.argv[1]).endswith(('.com','.cl','.net')):
+    # Si la dirección no comienza com http pero termina con .com .cl o .net se le agrega https:// al comienzo y se busca en el navegador
+    address = 'https://' + ''.join(sys.argv[1:])
+else:
+    # Buscar en google si hay más de una palabra
+    address = 'https://google.com/search?q=' + '+'.join(sys.argv[1:])
+
+try:
+    webbrowser.open(address)
+except:
+    print('Hubo un problema con la dirección ingresada.')
+
+

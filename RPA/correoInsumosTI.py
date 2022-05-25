@@ -52,8 +52,7 @@ br = webdriver.Chrome()
 br.get('https://gmail.com')
 
 # Login google
-user_box = WebDriverWait(br, 10).until(EC.visibility_of_element_located((By.NAME, 'identifier'))).send_keys(user)
-br.find_element(By.CLASS_NAME, 'VfPpkd-vQzf8d').click()
+user_box = WebDriverWait(br, 10).until(EC.visibility_of_element_located((By.NAME, 'identifier'))).send_keys(user, Keys.ENTER)
 pwd_box = WebDriverWait(br, 10).until(EC.visibility_of_element_located((By.NAME, 'password'))).send_keys(passwd)
 
 

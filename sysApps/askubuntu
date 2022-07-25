@@ -1,27 +1,18 @@
-#!/usr/bin/env python3
+#!/usr/bin/env bash
 #! python3
-# askubuntu - Busca y abre los primeros tres resultados de askubuntu
+import webbrowser, requests, sys, bs4
 
-import webbrowser, requests, sys, bs4 
-
-# Descarga la página con los resultados de la busqueda
 res = requests.get('https://askubuntu.com/search?q=' + '+'.join(sys.argv[1:]))
 res.raise_for_status()
 
-# Toma el HTML del resultado y flitra por la clase que contiene los link
 soup = bs4.BeautifulSoup(res.text, 'html.parser')
 link_elems = soup.select('.question-hyperlink')
 
-# Abre cada link encontrado en una pestaña nueva
 num_open = min(3, len(link_elems))
 for i in range(num_open):
     url_to_open = 'https://askubuntu.com' + link_elems[i].get('href')
     print('Abriendo', url_to_open)
     webbrowser.open(url_to_open)
-
-
-
-# ** ESTE CODIGO BUSCA EN ASKUBUNTU Y ABRE DIRECTAMENTE LA PAGINA CON LOS RESULTADOS, NO ABRE LOS LINK **
 
 # if len(sys.argv) == 1:
     # # Abrir pagina de busqueda de askubuntu si no se especifica nada

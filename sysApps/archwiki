@@ -1,10 +1,7 @@
-#!/usr/bin/env python3
+#!/usr/bin/env bash
 #! python3
-# archwiki - Busca el programa / servicio en la wiki de arch
-import webbrowser, requests, sys, bs4 
+import webbrowser, requests, sys, bs4
 
-# Descarga la página con los resultados de la busqueda
 url_to_open = 'https://wiki.archlinux.org/title/' + '+'.join(sys.argv[1:])
 
 webbrowser.open(url_to_open)
-

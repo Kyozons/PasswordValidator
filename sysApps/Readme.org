@@ -7,8 +7,7 @@ Busca un programa o servicio en la wiki de arch
 
 Importar modulos requeridos
 #+begin_src bash header-args :tangle archwiki
-#!/usr/bin/env bash
-#! python3
+#!/usr/bin/env python3
 import webbrowser, requests, sys, bs4
 #+end_src
 
@@ -27,46 +26,48 @@ Busca y abre los primeros tres resultados del foro askubuntu
 
 Importar modulos requeridos
 #+begin_src bash header-args :tangle askubuntu
-#!/usr/bin/env bash
-#! python3
+#!/usr/bin/env python3
 import webbrowser, requests, sys, bs4
 #+end_src
 
 Descarga la página con los resultados de la búsqueda
 #+begin_src bash header-args :tangle askubuntu
-res = requests.get('https://askubuntu.com/search?q=' + '+'.join(sys.argv[1:]))
-res.raise_for_status()
+# res = requests.get('https://askubuntu.com/search?q=' + '+'.join(sys.argv[1:]))
+# res.raise_for_status()
 #+end_src
 
 Toma el HTML del resultado y filtra por la clase que tiene los link
 #+begin_src bash header-args :tangle askubuntu
-soup = bs4.BeautifulSoup(res.text, 'html.parser')
-link_elems = soup.select('.question-hyperlink')
+# soup = bs4.BeautifulSoup(res.text, 'html.parser')
+# link_elems = soup.select('.question-hyperlink')
 #+end_src
 
 Abre cada link encontrado en una pestaña nueva
 #+begin_src bash header-args :tangle askubuntu
-num_open = min(3, len(link_elems))
-for i in range(num_open):
-    url_to_open = 'https://askubuntu.com' + link_elems[i].get('href')
-    print('Abriendo', url_to_open)
-    webbrowser.open(url_to_open)
+# num_open = min(3, len(link_elems))
+# for i in range(num_open):
+    # url_to_open = 'https://askubuntu.com' + link_elems[i].get('href')
+    # print('Abriendo', url_to_open)
+    # webbrowser.open(url_to_open)
 #+end_src
 
 Código alternativo para abrir sólo la pagina con los resultados de la búsqueda
 #+begin_src bash header-args :tangle askubuntu
-# if len(sys.argv) == 1:
-    # # Abrir pagina de busqueda de askubuntu si no se especifica nada
-    # address = 'https://askubuntu.com/search'
-# elif len(sys.argv) > 1:
-    # # Buscar en askubuntu lo escrito en la consola
-    # address = 'https://askubuntu.com/search?q=' + '+'.join(sys.argv[1:])
+if len(sys.argv) == 1:
+    # Abrir pagina de busqueda de askubuntu si no se especifica nada
+    address = 'https://askubuntu.com/search'
+elif len(sys.argv) > 1:
+    # Buscar en askubuntu lo escrito en la consola
+    address = 'https://askubuntu.com/search?q=' + '+'.join(sys.argv[1:])
 
-# else:
-    # # Indicar que ha habido un error
-    # address = ''
-    # print('Se ha ingresado uno o más carácteres inválidos. Favor reintentar')
-    # sys.exit()
+else:
+    # Indicar que ha habido un error
+    address = ''
+    print('Se ha ingresado uno o más carácteres inválidos. Favor reintentar')
+    sys.exit()
+
+
+webbrowser.open(address)
 #+end_src
 
 * MapIt
@@ -74,12 +75,11 @@ Lanza un mapa en el navegador usando una dirección indicada junto al comando o 
 
 Importar modulos necesarios
 #+begin_src bash header-args :tangle mapit
-#!/usr/bin/env bash
-#! python3
+#!/usr/bin/env python3
 import webbrowser, sys, pyperclip
 #+end_src
 
-Decidir si leer la dirreción desde la linea comandos o desde portapapeles si no se escribe nada junto a mapit
+Decidir si leer la dirección desde la linea comandos o desde portapapeles si no se escribe nada junto a mapit
 #+begin_src bash header-args :tangle mapit
 if len(sys.argv) > 1:
     # Leer la dirección desde la linea de comandos
@@ -99,8 +99,7 @@ Permite abrir un enlace escrito en la consola directamente a el navegador
 
 Importar modulos necesarios
 #+begin_src bash header-args :tangle webopen
-#!/usr/bin/env bash
-#! python3
+#!/usr/bin/env python3
 import webbrowser, sys
 #+end_src
 

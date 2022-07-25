@@ -1,5 +1,4 @@
-#!/usr/bin/env bash
-#! python3
+#!/usr/bin/env python3
 import webbrowser, requests, sys, bs4
 
 url_to_open = 'https://wiki.archlinux.org/title/' + '+'.join(sys.argv[1:])

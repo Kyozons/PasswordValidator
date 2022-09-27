@@ -15,6 +15,7 @@ ss = ezsheets.Spreadsheet('1gz3rHN_xXxHh9Pkzuaqwi_RrAyjogYvEhHLn2iPQVcs')
 ss.refresh()
 ss.downloadAsCSV(f'{full_path}insumos/insumos_ti.csv')
 
+# Credenciales
 with open(f'{full_path}creds', 'r') as creds:
     data = creds.read()
 user = data[:41]
